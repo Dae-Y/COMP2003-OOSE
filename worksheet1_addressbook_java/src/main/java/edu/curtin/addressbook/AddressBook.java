@@ -5,16 +5,15 @@ import java.util.*;
 /**
  * File: AddressBook.java
  * Author: Daehwan Yeo 19448288
- * Purpose: OOSE Prac 1
+ * Purpose: OOSE Wsh 2
  *          Contains all the address book entries.
  *          This class manages a collection of Entry objects, 
  *          allowing for entries to be added, and searched by name or email.
  * 
- * Reference: OOSE lecture 1 slides
+ * Reference: OOSE lecture 3 slides
  *            
  * Comments: 
- * 
- * Last mod: 04/08/2024
+ * Last mod: 10/08/2024
  */
 public class AddressBook
 {
@@ -41,6 +40,12 @@ public class AddressBook
     {
         return entriesByEmail.get(email);
     }
+
+    public Collection<Entry> getAllEntries()
+    {
+        return entriesByName.values();
+    }
+
 
     // MUTATOR
     public void addEntry(String name, List<String> emails) 

@@ -5,15 +5,14 @@ import java.util.*;
 /**
  * File: Entry.java
  * Author: Daehwan Yeo 19448288
- * Purpose: OOSE Prac 1
+ * Purpose: OOSE Wsh 2
  *          Represents a single address book entry.
  *          An addreess book entry with a name and a collection of unique email addresses.
  *
- * Reference: OOSE lecture 1 slides
+ * Reference: OOSE lecture 3 slides
  *            
  * Comments: 
- * 
- * Last mod: 31/07/2024
+ * Last mod: 10/08/2024
  */
 public class Entry 
 {

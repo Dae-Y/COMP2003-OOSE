@@ -6,136 +6,108 @@ import java.util.*;
 /**
  * File: AddressBookApp.java
  * Author: Daehwan Yeo 19448288
- * Purpose: OOSE Prac 1
- *          A simple address book application.
- *          This class manages the app's main workflow,
- *          reading the address book from a file and handling user interaction.
+ * Purpose: OOSE Wsh 2
+ *          Refactored to use non-static methods, contains a Map to store Option objects, 
+ *          and has a method to add options.
  * 
- * Reference: OOSE lecture 1 slides
+ * Reference: OOSE lecture 3 slides
  *            
  * Comments: 
- * 
- * Last mod: 04/08/2024
+ * Last mod: 10/08/2024
  */
-public class AddressBookApp 
+public class AddressBookApp
 {
-    /* Used to obtain user input. */
+    // CLASS FIELDS:
+    private AddressBook addressBook;
+    private Map<Integer, Option> options;
+
     private static Scanner input = new Scanner(System.in);
-    
+
+    // DEFAULT CONSTRUCTOR
+    public AddressBookApp()
+    {
+        addressBook = new AddressBook();
+        options = new HashMap<>();
+    }
+
+    public void addOption(int label, Option option)
+    {
+        options.put(label, option);
+    }
+
+    public void showMenu()
+    {
+        boolean done = false;
+        while(!done)
+        {
+            System.out.println("(1) Search by name, (2) Search by email, (3) Display all entries, (4) Quit");
+            try
+            {
+                int choice = Integer.parseInt(input.nextLine());
+                if (choice == 4)
+                {
+                    done = true;
+                }
+                else if(options.containsKey(choice))
+                {
+                    Option option = options.get(choice);
+                    String searchText = "";
+                    if (option.requiresText())
+                    {
+                        System.out.print("Enter search term: ");
+                        searchText = input.nextLine();
+                    }
+                    String result = option.doOption(searchText, addressBook);
+                    System.out.println(result);
+                }
+                else
+                {
+                    System.out.println("Enter a valid number");
+                }
+            }catch(NumberFormatException e)
+            {
+                System.out.println("Enter a number");
+            }
+        }
+    }
+
     public static void main(String[] args)
     {
-        String fileName;
-        String entryName;
-        
-        System.out.print("Enter address book filename: "); // "addressbook.txt"
-        fileName = input.nextLine();
-        
+        System.out.print("Enter address book filename: ");
+        String fileName = input.nextLine();
+
+        AddressBookApp app = new AddressBookApp();
+        app.addOption(1, new SearchByName());
+        app.addOption(2, new SearchByEmail());
+        app.addOption(3, new DisplayAllEntries());
+
         try
         {
-            AddressBook addressBook = readAddressBook(fileName);
-            showMenu(addressBook);
+            app.addressBook = readAddressBook(fileName);
+            app.showMenu();
         }
         catch(IOException e)
         {
             System.out.println("Could not read from " + fileName + ": " + e.getMessage());
         }
     }
-    
-    /**
-     * Read the address book file, containing all the names and email addresses.
-     *
-     * @param fileName The name of the address book file.
-     * @return A new AddressBook object containing all the information.
-     * @throws IOException If the file cannot be read.
-     */
+
     private static AddressBook readAddressBook(String fileName) throws IOException
     {
         AddressBook addressBook = new AddressBook();
-        
+
         try(BufferedReader reader = new BufferedReader(new FileReader(fileName)))
         {
-            String line = reader.readLine();
-            while(line != null)
+            String line;
+            while ((line = reader.readLine()) != null)
             {
                 String[] parts = line.split(":");
-                                
-                /* FIXME: Insert your code here to add a new address book entry. 
-                   parts[0] contains the person's name.
-                   parts[1], parts[2], etc. contain the person's email address(es). */
                 String name = parts[0];
                 List<String> emails = Arrays.asList(Arrays.copyOfRange(parts, 1, parts.length));
                 addressBook.addEntry(name, emails);
-                
-                line = reader.readLine();
             }
         }
         return addressBook;
     }
     
-    /**
-     * Show the main menu, offering the user options to (1) search entries by 
-     * name, (2) search entries by email, or (3) quit.
-     *
-     * @param addressBook The AddressBook object to search.
-     */
-    private static void showMenu(AddressBook addressBook)
-    {
-        boolean done = false;
-        while(!done)
-        {
-            int option;
-            System.out.println("(1) Search by name, (2) Search by email, (3) Quit");
-            
-            try
-            {
-                switch(Integer.parseInt(input.nextLine()))
-                {
-                    case 1:
-                        System.out.print("Enter name: ");
-                        String name = input.nextLine();
-                        
-                        // FIXME: Insert your code here to find an entry by name and display it.
-                        Entry entryByName = addressBook.getEntryByName(name);
-                        if(entryByName != null)
-                        {
-                            System.out.println(entryByName);
-                        }
-                        else
-                        {
-                            System.out.println("No entry found for name: " + name);
-                        }
-                        break;
-                        
-                    case 2:
-                        System.out.print("Enter email address: ");
-                        String email = input.nextLine();
-                        
-                        // FIXME: Insert your code here to find an entry by email and display it.
-                        Entry entryByEmail = addressBook.getEntryByEmail(email);
-                        if(entryByEmail != null)
-                        {
-                            System.out.println(entryByEmail);
-                        }
-                        else
-                        {
-                            System.out.println("No entry found for email: " + email);
-                        }
-                        break;
-                        
-                    case 3:
-                        done = true;
-                        break;
-                        
-                    default:
-                        System.out.println("Enter a valid number");
-                        break;
-                }
-            }
-            catch(NumberFormatException e)
-            {
-                // The user entered something non-numerical.
-                System.out.println("Enter a number");
-            }
-        }
-    }
 }

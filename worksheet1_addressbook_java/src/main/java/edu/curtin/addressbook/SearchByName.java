@@ -1,3 +1,5 @@
+package edu.curtin.addressbook;
+
 /**
  * File: SearchByName.java
  * Author: Daehwan Yeo 19448288
