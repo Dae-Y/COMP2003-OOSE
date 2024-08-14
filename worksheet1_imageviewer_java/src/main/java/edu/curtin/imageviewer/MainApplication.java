@@ -6,17 +6,6 @@ import javafx.stage.Stage;
 
 import java.io.*;
 
-/**
- * File: MainApplication.java
- * Author: Daehwan Yeo 19448288
- * Purpose: OOSE Prac 1
- * Reference: OOSE lecture 1 slides
- *            
- * Comments: Main class representing the entry point (and controller) of the application.
- *           It will load the album file and manage the application start-up process.
- * 
- * Last mod: 04/08/2024
- */
 public class MainApplication extends Application
 {
     public static void main(String[] args)

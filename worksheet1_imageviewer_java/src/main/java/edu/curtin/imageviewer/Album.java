@@ -1,17 +1,6 @@
 package edu.curtin.imageviewer;
 import java.util.*;
 
-/**
- * File: Album.java
- * Author: Daehwan Yeo 19448288
- * Purpose: OOSE Prac 1
- * Reference: OOSE lecture 1 slides
- *            
- * Comments: This class manages a list of ImageRecord objects,
- *           provides methods to get current, next, previous images.
- * 
- * Last mod: 04/08/2024
- */
 public class Album 
 {
     // CLASS FIELDS:

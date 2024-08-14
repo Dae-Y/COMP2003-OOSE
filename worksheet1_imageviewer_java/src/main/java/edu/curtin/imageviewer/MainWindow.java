@@ -14,18 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.event.ActionEvent;
 import java.io.File;
 
-/**
- * File: MainWindow.java
- * Author: Daehwan Yeo 19448288
- * Purpose: OOSE Prac 1
- * Reference: OOSE lecture 1 slides
- *            
- * Comments: Represents the main user interface for the Image Viewer application.
- *           Manages the GUI, including displaying images and captions, 
- *           and handling navigation between images.
- * 
- * Last mod: 05/08/2024
- */
+
 public class MainWindow
 {
     // CLASS FIELDS:
@@ -87,7 +76,10 @@ public class MainWindow
         
         Button prevBtn = new Button("Previous");
         Button nextBtn = new Button("Next");
-        ToolBar toolBar = new ToolBar(prevBtn, nextBtn);
+        Button scaleBtn = new Button("Scale");
+        Button rotateBtn = new Button("Rotate");
+        Button invertBtn = new Button("Invert");
+        ToolBar toolBar = new ToolBar(prevBtn, nextBtn, scaleBtn, rotateBtn, invertBtn);
         mainBox.setTop(toolBar);
         
         // Set up nextBtnHandler() to be called when nextBtn is clicked, and similarly for prevBtn.
@@ -95,7 +87,10 @@ public class MainWindow
         // method.)
         prevBtn.setOnAction(this::prevBtnHandler);
         nextBtn.setOnAction(this::nextBtnHandler);
-        
+        scaleBtn.setOnAction(this::scaleBtnHandler);
+        rotateBtn.setOnAction(this::rotateBtnHandler);
+        invertBtn.setOnAction(this::invertBtnHandler);
+
         ScrollPane scroller = new ScrollPane();
         scroller.setContent(imageWidget);
         mainBox.setCenter(scroller);
@@ -144,5 +139,39 @@ public class MainWindow
             imageWidget.setImage(new Image(url));
             captionWidget.setText(nextImage.getCaption());
         }
+    }
+    
+    private void scaleBtnHandler(ActionEvent event)
+    {
+        /*
+        ImageRecord currentImage = album.getCurrentImage();
+        if(currentImage != null)
+        {
+            // Load the image data from the file
+            ImageData oldImageData = loadImageData(currentImage.getFilename());
+
+            // Create a ScalingProcessor and apply the scaling operation
+            ScalingProcessor scalingProcessor = new ScalingProcessor();
+            ImageData scaledImageData = scalingProcessor.applyOperation(oldImageData);
+
+            // Convert the scaled ImageData to a temporary image file URL and update the ImageView
+            String scaledImageUrl = convertToImageUrl(scaledImageData);
+            imageWidget.setImage(new Image(scaledImageUrl));
+
+            // Update the caption
+            captionWidget.setText(currentImage.getCaption());
+        }*/
+    }
+
+
+
+    private void rotateBtnHandler(ActionEvent event)
+    {
+        
+    }
+
+    private void invertBtnHandler(ActionEvent event)
+    {
+        
     }
 }
